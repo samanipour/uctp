@@ -1,0 +1,187 @@
+{
+    "instructors": [
+        {
+            "id": 1,
+            "semester_load": [5, 8, 12],
+            "courses": [1, 2, 3],
+            "priorities": [10,1,1],
+            "type":1
+        },
+        {
+            "id": 2,
+            "semester_load": [16, 8, 10],
+            "courses": [4, 5, 6],
+            "priorities":[1,8,1],
+            "type":1
+        },
+        {
+            "id": 3,
+            "semester_load": [3, 12, 6],
+            "courses": [7, 8],
+            "priorities":[5,2],
+            "type":1
+        },
+        {
+            "id": 4,
+            "semester_load": [1, 6, 10],
+            "courses": [9, 10],
+            "priorities":[1,2],
+            "type":1
+        }
+    ],
+    "plans":[
+        {
+            "id":1,
+            "mandatory_load":120,
+            "optional_load":24,
+            "courses": [
+                {
+                    "id": 1,
+                    "name": "Computer Science 101",
+                    "load_value": 1,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false
+                },
+                {
+                    "id": 2,
+                    "name": "Mathematics 201",
+                    "load_value": 2,
+                    "prerequisites": [200],
+                    "corequisites": [101],
+                    "is_elective": true
+                },
+                {
+                    "id": 3,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false
+                },
+                {
+                    "id": 4,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false
+                },
+                {
+                    "id": 5,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false
+                },
+                {
+                    "id": 6,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": true
+                },
+                {
+                    "id": 7,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false
+                },
+                {
+                    "id": 8,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": true
+                },
+                {
+                    "id": 9,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false
+                }
+            ]
+        }
+
+    ],
+    "students":[
+        {
+            "id": 1,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 2,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 3,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 4,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 5,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 6,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 8,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 9,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 10,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        },
+        {
+            "id": 11,
+            "courses": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "elective_courses":[3,5,9],
+            "min_load":12,
+            "max_load":24
+        }
+        
+    ]
+}
