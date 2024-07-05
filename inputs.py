@@ -2,7 +2,7 @@ import json
 from instructor import Instructor
 from course import Course
 from student import Student
-
+from uni_program import UniProgram
 # Load the JSON data
 with open('inputs.json', 'r') as f:
     data = json.load(f)
@@ -47,37 +47,53 @@ def get_courses(data):
         prerequisites=course['prerequisites']
         corequisites=course['corequisites'] 
         is_elective=course['is_elective']
+        program_id =data['id']
         course = Course(id)
         course.name = name
         course.load = load_value
         course.prerequisites = prerequisites
         course.corequisite = corequisites
         course.is_elective = is_elective
+        course.program_id = program_id
         course_list.append(course)
     return course_list
-def get_uni_plans():
-    for plan in data['plans']:
-        plan_id = plan['id']
-        plan_mandatory_load = plan['mandatory_load']
-        plan_optional_load = plan['optional_load']
-        plan_courses = get_courses(plan)
+def get_uni_programs():
+    programs = list()
+    for program in data['programs']:
+        program_id = program['id']
+        program_min_load = program['min_load']
+        program_max_load = program['max_load']
+        program_mandatory_load = program['mandatory_load']
+        program_optional_load = program['elective_load']
+        program_degree = program['program_degree']
+        program_courses = get_courses(program)
+        program = UniProgram(id=program_id,min_load=program_min_load,max_load=program_max_load,mandatory_load=program_mandatory_load,
+                             optional_load=program_optional_load,courses=program_courses,program_degree=program_degree)
+        programs.append(program)
+    return programs
         
 def get_students():
     student_list = list()
     for student in data['students']:
         id = student['id']
-        courses = student['courses']
-        elective_courses=student["elective_courses"]
-        min_load = student["min_load"]
-        max_load = student["max_load"]
-        student = Student(id)
+        program_id=student['program_id']
+        student_program = get_program(program_id)
+        courses = student_program.courses
+        elective_courses=[courses[i] for i in range(len(courses)) if courses[i].is_elective == True]
+        min_load = student_program.min_load
+        max_load = student_program.max_load
+        student = Student(id,program_id)
         student.courses = courses
         student.elective_courses = elective_courses
-        student.max_load = min_load
-        max_load = max_load
+        student.min_load = min_load
+        student.max_load = max_load
         student_list.append(student)
     return student_list
 
+def get_program(id):
+    for program in get_uni_programs():
+        if program.id == id:
+            return program
 if __name__ == "__main__":
     for ins in get_instructors():
         print(ins.course_list)

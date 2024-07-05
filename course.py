@@ -1,6 +1,7 @@
 class Course:
     def __init__(self,input_id):
         self.id = input_id
+        self.program_id=1
         self.load = 2
         self.name = "course_name"
         self.prerequisites = list()
@@ -13,3 +14,8 @@ def get_course_load(course_list,course_id):
     for course in course_list:
         if course.id == course_id:
             return course.load
+        
+def get_course(course_list,course_id):
+    for course in course_list:
+        if course.id == course_id:
+            return course
