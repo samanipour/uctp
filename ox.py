@@ -10,8 +10,6 @@ def recombine(p1,p2,random):
     ofs2.g = [-1]*chromosom_size
 
     start, end = sorted([random.randrange(chromosom_size) for _ in range(2)])
-    # start, end = 3,6
-    # Copy the selected slice from parents to children
     ofs1.g[start:end + 1] = p1.g[start:end + 1]
     ofs2.g[start:end + 1] = p2.g[start:end + 1]
 
@@ -31,11 +29,3 @@ def recombine(p1,p2,random):
     #             ofs2.g[i] = p2.g[i]
 
     return ofs1
-
-mum = Individual()
-dad = Individual()
-mum.g = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-dad.g = [9, 8, 7, 6, 5, 4, 3, 2, 1]
-child1 = recombine(mum, dad,random)
-print("Child 1:", child1.g)
-# print("Child 2:", child2.g)

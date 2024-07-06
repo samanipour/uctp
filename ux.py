@@ -16,11 +16,3 @@ def recombine(parent1, parent2,random):
             offspring2.g.append(parent1.g[i])
 
     return offspring1
-
-# # Example usage
-# parent1 = ['a', 'b', 'c', 'd']
-# parent2 = ['e', 'f', 'a', 'b']
-# child1, child2 = uniform_crossover(parent1, parent2)
-
-# print("Child 1:", child1)
-# print("Child 2:", child2)

@@ -94,11 +94,11 @@ def get_program(id):
     for program in get_uni_programs():
         if program.id == id:
             return program
+def get_course_program(course_id):
+    for program in get_uni_programs():
+        for course in program.courses:
+            if course_id == course.id:
+                return program
 if __name__ == "__main__":
     for ins in get_instructors():
         print(ins.course_list)
-    #
-    # for c in get_courses():
-    #     print(c.is_elective)
-    # for s in get_students():
-    #     print(s.id)

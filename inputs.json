@@ -72,7 +72,7 @@
             "program_degree":1,
             "courses": [
                 {
-                    "id": 1,
+                    "id": 0,
                     "name": "Computer Science 101",
                     "load_value": 1,
                     "prerequisites": [100],
@@ -81,12 +81,21 @@
                     "is_common":false
                 },
                 {
-                    "id": 2,
+                    "id": 1,
                     "name": "Mathematics 201",
                     "load_value": 2,
                     "prerequisites": [200],
                     "corequisites": [101],
                     "is_elective": true,
+                    "is_common":false
+                },
+                {
+                    "id": 2,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false,
                     "is_common":false
                 },
                 {
@@ -113,7 +122,7 @@
                     "load_value": 3,
                     "prerequisites": [100],
                     "corequisites": [],
-                    "is_elective": false,
+                    "is_elective": true,
                     "is_common":false
                 },
                 {
@@ -122,7 +131,7 @@
                     "load_value": 3,
                     "prerequisites": [100],
                     "corequisites": [],
-                    "is_elective": true,
+                    "is_elective": false,
                     "is_common":false
                 },
                 {
@@ -131,7 +140,7 @@
                     "load_value": 3,
                     "prerequisites": [100],
                     "corequisites": [],
-                    "is_elective": false,
+                    "is_elective": true,
                     "is_common":false
                 },
                 {
@@ -140,11 +149,29 @@
                     "load_value": 3,
                     "prerequisites": [100],
                     "corequisites": [],
-                    "is_elective": true,
+                    "is_elective": false,
                     "is_common":false
                 },
                 {
                     "id": 9,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false,
+                    "is_common":false
+                },
+                {
+                    "id": 10,
+                    "name": "Computer Science 101",
+                    "load_value": 3,
+                    "prerequisites": [100],
+                    "corequisites": [],
+                    "is_elective": false,
+                    "is_common":false
+                },
+                {
+                    "id": 11,
                     "name": "Computer Science 101",
                     "load_value": 3,
                     "prerequisites": [100],
