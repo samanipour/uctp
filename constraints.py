@@ -73,17 +73,20 @@ def student_load_violation(plan,uni_program_list,student_list):
             if total_plan_load != (student_program_mandatory_load+student_program_elective_load):
                 penalty+=1
     return penalty
-
+def total_violation(plan,uni_program_list,student_list):
+    violation = 0
+    violation += prerequisites_violation_penalty(plan,uni_program_list)
+    violation += corequisites_violation_penalty(plan,uni_program_list)
+    violation += plan_total_load_violation(plan,uni_program_list)
+    violation += student_load_violation(plan,uni_program_list,student_list)
+    return violation
 def is_plan_feasible(plan,uni_program_list,student_list):
-    penalty = 0
-    penalty += prerequisites_violation_penalty(plan,uni_program_list)
-    penalty += corequisites_violation_penalty(plan,uni_program_list)
-    penalty += plan_total_load_violation(plan,uni_program_list)
-    penalty += student_load_violation(plan,uni_program_list)
-    if penalty != 0:
+    violation = total_violation(plan,uni_program_list,student_list)
+    if violation != 0:
         return False
     else:
         return True
+
 def get_program(id,uni_program_list):
     for program in uni_program_list:
         if id == program.id:

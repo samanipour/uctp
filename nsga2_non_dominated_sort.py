@@ -1,3 +1,4 @@
+import constraint_domination
 def non_dominated_sorting(population):
     """
     Perform non-dominated sorting on the population.
@@ -18,9 +19,9 @@ def non_dominated_sorting(population):
         S[p] = []
         n[p] = 0
         for q in range(len(population)):
-            if dominates(population[p].y, population[q].y):
+            if constraint_domination.dominates(population[p].y, population[q].y):
                 S[p].append(q)
-            elif dominates(population[q].y, population[p].y):
+            elif constraint_domination.dominates(population[q].y, population[p].y):
                 n[p] += 1
         
         if n[p] == 0:
@@ -57,4 +58,5 @@ def dominates(fitness1, fitness2):
     Returns:
     - True if fitness1 dominates fitness2, False otherwise
     """
+    # print(f"fitness 1 {fitness1}")
     return all(x <= y for x, y in zip(fitness1, fitness2)) and any(x < y for x, y in zip(fitness1, fitness2))
