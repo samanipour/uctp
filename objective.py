@@ -1,5 +1,6 @@
 from course import get_course
 from inputs import get_course_program
+from inputs import get_program
 def compute(plan,instructor_list,course_list,student_list,uni_programs,min_load,max_load,random):
     ie = total_instructor_load_error(plan,instructor_list,uni_programs)
     bpf= best_priorities_first(plan,instructor_list)
@@ -60,7 +61,21 @@ def best_priorities_first(plan,instructor_list):
                         instructor_prio_fintness += ins_course_priority #lower fitness is better
         total_prio_fitness += instructor_prio_fintness
     return total_prio_fitness    
-
+def total_instructor_course_priorities(plan,instructor_list):
+    total_prio_fitness = 0
+    for semester in plan:
+        instructor_prio_fintness = 0
+        for course_id in semester:
+            for instructor in instructor_list:
+                ins_priorities = instructor.priorities
+                ins_courses = instructor.course_list
+                for ins_c in ins_courses:
+                    if (course_id == ins_c):
+                        index = ins_courses.index(course_id)
+                        ins_course_priority = ins_priorities[index]
+                        instructor_prio_fintness += (1/ins_course_priority) #we want to maximize
+        total_prio_fitness += instructor_prio_fintness
+    return total_prio_fitness    
 def total_plan_load(plan,course_list):
     total_load = 0
     for semester in plan:
@@ -75,19 +90,24 @@ def total_students_load(plan,course_list,student_list,min_load,max_load):
     for student in student_list:
         student_load = [0]*len(plan) # number of semesters
         student_load_fitness = 0
+        student_courses = student.courses + student.elective_courses
+        student_courses_ids = [c.id for c in student_courses]
         for i in range(len(plan)):
             semester = plan[i]
             for course_id in semester:
-                course_load = get_course(course_list,course_id).load
-                student_load[i] += course_load
+                student_courses = student.courses + student.elective_courses
+                if course_id in student_courses_ids:
+                    course_load = get_course(course_list,course_id).load
+                    student_load[i] += course_load
         
-        # calculate to see if all semester loads are the same
-        total_load = sum(student_load)
-        avg_load = total_load/len(student_load)
+        # calculate to see if all semester loads are the balance
+        # total_load = sum(student_load)
+        # avg_load = total_load/len(student_load)
+        student_program_id = student.program_id
+        student_program = get_program(student_program_id)
+        ideal_load = (student_program.mandatory_load + student_program.elective_load)/len(student_program.courses)
         for sem_load in student_load:
-            if (abs(sem_load-avg_load)>=1):
-                student_load_fitness +=1
-            if(min_load <= sem_load <= max_load):
+            if (abs(sem_load-ideal_load)>=1):
                 student_load_fitness +=1
 
         sorted_loads = sorted(student_load)
@@ -96,7 +116,46 @@ def total_students_load(plan,course_list,student_list,min_load,max_load):
 
         total_fitness+=student_load_fitness
     return total_fitness
+def student_load_balance_error(plan,course_list,student_list):
+    total_fitness = 0
+    for student in student_list:
+        student_load = [0]*len(plan) # number of semesters
+        student_load_fitness = 0
 
+        student_courses = student.courses + student.elective_courses
+        student_courses_ids = [c.id for c in student_courses]
+        student_program_id = student.program_id
+        student_program = get_program(student_program_id)
+        ideal_load = (student_program.mandatory_load + student_program.optional_load)/len(student_program.courses)
+        for i in range(len(plan)):
+            semester = plan[i]
+            for course_id in semester:
+                if course_id in student_courses_ids:
+                    course_load = get_course(course_list,course_id).load
+                    student_load[i] += course_load
+        # calculate to see if all semester loads are the balance
+        # total_load = sum(student_load)
+        # ideal_load = total_load/len(student_load)
+
+        for sem_load in student_load:
+            student_load_fitness += abs(sem_load-ideal_load)
+        total_fitness+=student_load_fitness
+    return total_fitness
+def students_final_load(plan,course_list,student_list):
+    total_fitness = 0
+    for student in student_list:
+        final_sem_load = 0
+        student_courses = student.courses + student.elective_courses
+        student_courses_ids = [c.id for c in student_courses]
+        final_semester = plan[len(plan)-1]
+        for course_id in final_semester:
+            if course_id in student_courses_ids:
+                course_load = get_course(course_list,course_id).load
+                final_sem_load += course_load
+        total_fitness +=final_sem_load
+    return total_fitness
+            
+    
 def total_students_courses(plan,course_list,student_list):
     number_of_courses = 0
     for semester in plan:
@@ -106,7 +165,8 @@ def total_students_courses(plan,course_list,student_list):
     for semester in plan:
         for course_id in semester:
             for student in student_list:
-                if course_id in student.courses or course_id in student.elective_courses:
+                student_course_ids = [c.id for c in student.courses] + [c.id for c in student.elective_courses]
+                if course_id in student_course_ids:
                     student_number_of_course[course_id]+=1
 
     total_register_students = sum(student_number_of_course)
