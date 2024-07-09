@@ -66,9 +66,10 @@ def get_uni_programs():
         program_mandatory_load = program['mandatory_load']
         program_optional_load = program['elective_load']
         program_degree = program['program_degree']
+        program_max_term = program['max_term']
         program_courses = get_courses(program)
         program = UniProgram(id=program_id,min_load=program_min_load,max_load=program_max_load,mandatory_load=program_mandatory_load,
-                             optional_load=program_optional_load,courses=program_courses,program_degree=program_degree)
+                             optional_load=program_optional_load,courses=program_courses,program_degree=program_degree,program_max_term=program_max_term)
         programs.append(program)
     return programs
         
@@ -89,7 +90,13 @@ def get_students():
         student.max_load = max_load
         student_list.append(student)
     return student_list
-
+def get_course(course_id):
+    programs = get_uni_programs()
+    for p in programs:
+        program_courses = p.courses
+        for course in program_courses:
+            if course.id == course_id:
+                return course
 def get_program(id):
     for program in get_uni_programs():
         if program.id == id:
@@ -99,6 +106,16 @@ def get_course_program(course_id):
         for course in program.courses:
             if course_id == course.id:
                 return program
+def get_instructor(ins_id):
+    instructors = get_instructors()
+    for ins in instructors:
+        if (ins_id == ins.id):
+            return ins
+        
+def get_courses_nums():
+    return 30
+def get_max_terms():
+    return 8
 if __name__ == "__main__":
     for ins in get_instructors():
         print(ins.course_list)

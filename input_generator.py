@@ -22,7 +22,7 @@ def generate_input(course_nums,instructor_nums,student_nums,program_nums,max_ter
             ins_sems_loads.append(random.randint(3,12))
         ins_courses = list()
         for c in range(course_nums):
-            ins_courses.append(random.randint(0,course_nums))
+            ins_courses.append(c)
         ins_prios = list()
         for p in range(course_nums):
             ins_prios.append(random.randint(0,10))
@@ -59,6 +59,7 @@ def generate_input(course_nums,instructor_nums,student_nums,program_nums,max_ter
         program["min_load"] = random.randint(6,12)
         program["max_load"] = random.randint(12,24)
         program["program_degree"] = i
+        program["max_term"] = random.randint(2,8)
         for j in range(course_nums):
             course = {}
             course["id"] = j
@@ -76,4 +77,4 @@ def generate_input(course_nums,instructor_nums,student_nums,program_nums,max_ter
     with open(output_file, 'w') as f:
         json.dump({"instructors": instructors,"students":students,"programs":programs}, f, indent=4)
 
-generate_input(course_nums=30,instructor_nums=20,student_nums=100,program_nums=3,max_term=8,random=random)
+generate_input(course_nums=10,instructor_nums=1,student_nums=1,program_nums=3,max_term=8,random=random)

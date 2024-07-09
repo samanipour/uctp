@@ -22,7 +22,7 @@ class SimulatedAnnealing:
         self.time_index = 1
         while (self.termination.shouldTerminate() == False):
             p_new = Individual()
-            p_new.g = self.unary.mutate(self.random,p_current.g,4)
+            p_new.g = self.unary.mutate(random=self.random,p=p_current.g)
             p_new.x = self.gpm.gpm(p_new.g)
             p_new.y = objective.compute(p_new.x)
             delta_e = p_new.y - p_current.y
