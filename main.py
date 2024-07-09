@@ -7,6 +7,7 @@ from sa_tempschedular import LnTempSchedular
 from sa_tempschedular import PolyTempSchedular
 from sa import SimulatedAnnealing
 from sa_maxtime  import MaxTimeTermination
+from max_fe_calls import MaxFeCalls
 import random
 import math
 from individual import Individual
@@ -23,21 +24,19 @@ from plot_results import plot_lines
 import nsga2_non_dominated_sort2
 from nsga2_crowding_dist import crowding_distance
 from nsga2_tournament_selection import tournament_selection
-def solve_by_sa(cnum,max_sem_num,random):
+def solve_by_sa(cnum,max_sem_num,termination,random):
     nullary = Nullary(cnum,max_sem_num)
     unary = Unary(max_sem_num)
     objective = UTCObjective()
     gpm = GPM()
     max_termination_time = 20 #In seconds
-    termination = MaxTimeTermination(max_termination_time)
+    # termination = MaxFeCalls(11)
     temp_schedular = PolyTempSchedular(t_start=10,epsilon=0.05)
     SA  = SimulatedAnnealing(random,temp_schedular,gpm=gpm,nullary=nullary,unary=unary,termination=termination)
-    best_found_solution = SA.solve(objective)
-    return best_found_solution
+    best_found_solution,fitness_scores = SA.solve(objective)
+    return fitness_scores
 
-def solve_by_ge(cnum,max_sem_num,random):
-    
-
+def solve_by_ge(cnum,max_sem_num,termination,random):
     # genetic algo
     pop_size = 4    
     pop = list()
@@ -62,7 +61,7 @@ def solve_by_ge(cnum,max_sem_num,random):
     mate_size = pop_size
     cr = 0.7
     fitness_scores = list()
-    while (t < 10):
+    while (not termination.shouldTerminate()):
         for i in range(pop_size):
             pcur = pop[i]
             pcur.x = gpm(pcur.g)
@@ -80,10 +79,11 @@ def solve_by_ge(cnum,max_sem_num,random):
             else:
                 pcur = mutate(p=mate_pool[i],max_terms=max_sem_num,random=random)
             pop[i] = pcur
-        print(f"iteration{t}")
+        # print(f"iteration{t}")
         t+=1
         fitness_scores.append(pbest.y)
-    plot_results(fitness_scores)
+    return fitness_scores
+    # plot_results(fitness_scores)
 
 
 
@@ -218,8 +218,13 @@ def solve_by_nsga2(cnum,max_sem_num,random):
 def main():
     max_sem_num = inputs.get_max_terms()
     cnum = inputs.get_courses_nums()
-    solve_by_sa(max_sem_num=max_sem_num,cnum=cnum,random=random)
-    solve_by_ge(cnum=cnum,max_sem_num=max_sem_num,random=random)
+    random.seed(1333)
+    sa_termination = MaxFeCalls(1000)
+    ge_termination = MaxFeCalls(1000)
+    nsga2_termination = MaxFeCalls(1000)
+    sa_fitness_scores = solve_by_sa(cnum=cnum,max_sem_num=max_sem_num,termination=sa_termination,random=random)
+    ge_fitness_scores = solve_by_ge(cnum=cnum,max_sem_num=max_sem_num,termination=ge_termination,random=random)
+    plot_lines([sa_fitness_scores,ge_fitness_scores],['sa','ge'])
     # solve_by_nsga2(cnum=cnum,max_sem_num=max_sem_num,random=random)
 
 main()

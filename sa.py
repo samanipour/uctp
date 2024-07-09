@@ -20,7 +20,7 @@ class SimulatedAnnealing:
         self.p_best.y = objective.compute(self.p_best.x)
         p_current = self.p_best 
         self.time_index = 1
-        while (self.termination.shouldTerminate() == False):
+        while (not self.termination.shouldTerminate()):
             p_new = Individual()
             p_new.g = self.unary.mutate(random=self.random,p=p_current.g)
             p_new.x = self.gpm.gpm(p_new.g)
@@ -37,5 +37,5 @@ class SimulatedAnnealing:
             fitness_scores.append(self.p_best.y)
             # print(fitness_scores)
             self.time_index+=1
-        plot_results(fitness_scores)
-        return self.p_best
+        # plot_results(fitness_scores)
+        return self.p_best,fitness_scores
