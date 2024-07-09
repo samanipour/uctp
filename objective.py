@@ -105,7 +105,7 @@ def total_students_load(plan,course_list,student_list,min_load,max_load):
         # avg_load = total_load/len(student_load)
         student_program_id = student.program_id
         student_program = get_program(student_program_id)
-        ideal_load = (student_program.mandatory_load + student_program.elective_load)/len(student_program.courses)
+        ideal_load = (student_program.mandatory_load + student_program.optional_load)/len(student_program.courses)
         for sem_load in student_load:
             if (abs(sem_load-ideal_load)>=1):
                 student_load_fitness +=1
