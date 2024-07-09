@@ -67,7 +67,7 @@ for i in range(pop_size):
     # print(f1,f2,f3,f4,f5)
     pop[i].y = (f1,f2,f3,f4,f5)
 
-while (t < 1000):
+while (t < 100):
     #3 Rank solutions based on Pareto dominance
     fronts,fronts_individual = nsga2_non_dominated_sort.non_dominated_sorting(pop)
     # print(fronts)

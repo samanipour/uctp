@@ -16,8 +16,8 @@ from plot_results import plot_results
 def evaluate():
     # Create a 2D Matrix for robot playground
 
-    max_sem_num   =4
-    cnum=10
+    max_sem_num =4
+    cnum = 10
     
     student_list = inputs.get_students()
     instructor_list = inputs.get_instructors()
@@ -29,7 +29,7 @@ def evaluate():
     objective = UTCObjective(instructor_list=instructor_list,course_list=course_list,student_list=student_list,
                          uni_programs=uni_programs,min_load=12,max_load=24)
     gpm = GPM(max_sem_num)
-    max_termination_time = 1 #In seconds
+    max_termination_time = 100 #In seconds
 
     # founded_solution_by_HC = []
     founded_solution_by_SA = []
@@ -59,7 +59,7 @@ def evaluate():
     
     
     # print(f"founded solutions by SA {founded_solution_by_SA}")
-    plot_results(fitness_scores)
+    # plot_results(fitness_scores)
 
     # plot_time_series(founded_solution_by_SA,founded_solution_by_HC,"SA","HC")
 

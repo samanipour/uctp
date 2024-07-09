@@ -73,7 +73,7 @@ def total_instructor_course_priorities(plan,instructor_list):
                     if (course_id == ins_c):
                         index = ins_courses.index(course_id)
                         ins_course_priority = ins_priorities[index]
-                        instructor_prio_fintness += (1/ins_course_priority) #we want to maximize
+                        instructor_prio_fintness += (1/(1+ins_course_priority)) #we want to maximize
         total_prio_fitness += instructor_prio_fintness
     return total_prio_fitness    
 def total_plan_load(plan,course_list):
