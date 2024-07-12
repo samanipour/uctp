@@ -1,5 +1,5 @@
-import constraint.constraints2 as constraints2
-import helper.inputs as inputs
+from ..constraint import constraints2
+from ..helper import inputs
 def constraint_dominates(ind1, ind2):
     """
     Determine if ind1 dominates ind2 considering constraints.

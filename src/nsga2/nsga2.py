@@ -1,9 +1,9 @@
 import math
 import random
 from ..model.individual import Individual
-from nsga2_non_dominated_sort import non_dominated_sorting
-from nsga2_crowding_dist import crowding_distance
-from nsga2_tournament_selection import ParetoTournament
+from .nsga2_non_dominated_sort import non_dominated_sorting
+from .nsga2_crowding_dist import crowding_distance
+from .nsga2_tournament_selection import ParetoTournament
 from ..termination.maxtime import MaxTimeTermination
 from ..helper import inputs
 from ..gpm.gpm import GPM
@@ -45,29 +45,29 @@ class NSGA2:
 
         #2 Evaluate Population
         for i in range(self.pop_size):
-            pop[i].x = self.gpm.gpm(pop[i].g)
+            self.pop[i].x = self.gpm.gpm(self.pop[i].g)
 
-            f1 = objective.total_instructor_course_priorities(plan=pop[i].x)
-            f2 = objective.total_instructor_load_error(plan=pop[i].x)
-            f3 = objective.total_students_courses(plan=pop[i].x)
-            f4 = objective.student_load_balance_error(plan=pop[i].x)
-            f5 = objective.students_final_load(plan=pop[i].x)
+            f1 = objective.total_instructor_course_priorities(plan=self.pop[i].x)
+            f2 = objective.total_instructor_load_error(plan=self.pop[i].x)
+            f3 = objective.total_students_courses(plan=self.pop[i].x)
+            f4 = objective.student_load_balance_error(plan=self.pop[i].x)
+            f5 = objective.students_final_load(plan=self.pop[i].x)
             # print(f1,f2,f3,f4,f5)
-            pop[i].y = (f1,f2,f3,f4,f5)
+            self.pop[i].y = (f1,f2,f3,f4,f5)
 
         while (not self.termination.shouldTerminate()):
             #3 Rank solutions based on Pareto dominance
-            fronts,fronts_individual = non_dominated_sorting(pop)
+            fronts,fronts_individual = non_dominated_sorting(self.pop)
             # print(fronts)
             # Step 4: Calculate crowding distances for each front
-            distances = [0] * len(pop)
+            distances = [0] * len(self.pop)
             for front in fronts:
-                front_distances = crowding_distance(pop, front)
+                front_distances = crowding_distance(self.pop, front)
                 for i in range(len(front)):
                     distances[front[i]] = front_distances[front[i]]
 
             # Step 5: Perform tournament selection
-            mate_pool = self.selection.select(pop, fronts, distances)
+            mate_pool = self.selection.select(self.pop, fronts, distances)
   
             offsprings=[]
             for i in range(self.mate_size):
@@ -89,11 +89,11 @@ class NSGA2:
                 # print(f1,f2,f3,f4,f5)
                 offsprings[i].y = (f1,f2,f3,f4,f5)
 
-            pop = []+offsprings
+            self.pop = []+offsprings
 
             # for p in pop:
             #     print(p.x,p.y)
-            fronts,fronts_individual = non_dominated_sorting(pop)
+            fronts,fronts_individual = non_dominated_sorting(self.pop)
 
             # Select the next generation population
             next_population = []
@@ -106,17 +106,17 @@ class NSGA2:
                     next_population.extend([ind for ind, _ in sorted_front[:self.pop_size - len(next_population)]])
                     break
                 
-            pop = []+next_population
+            self.pop = []+next_population
 
-            best_fitness_f1 = min(ind.y[0] for ind in pop)  # Assuming y[0] corresponds to the primary objective
+            best_fitness_f1 = min(ind.y[0] for ind in self.pop)  # Assuming y[0] corresponds to the primary objective
             fitness_scores_f1.append(best_fitness_f1)
-            best_fitness_f2 = min(ind.y[1] for ind in pop)  # Assuming y[0] corresponds to the primary objective
+            best_fitness_f2 = min(ind.y[1] for ind in self.pop)  # Assuming y[0] corresponds to the primary objective
             fitness_scores_f2.append(best_fitness_f2)
-            best_fitness_f3 = min(ind.y[2] for ind in pop)  # Assuming y[0] corresponds to the primary objective
+            best_fitness_f3 = min(ind.y[2] for ind in self.pop)  # Assuming y[0] corresponds to the primary objective
             fitness_scores_f3.append(best_fitness_f3)
-            best_fitness_f4 = min(ind.y[3] for ind in pop)  # Assuming y[0] corresponds to the primary objective
+            best_fitness_f4 = min(ind.y[3] for ind in self.pop)  # Assuming y[0] corresponds to the primary objective
             fitness_scores_f4.append(best_fitness_f4)
-            best_fitness_f5 = min(ind.y[4] for ind in pop)  # Assuming y[0] corresponds to the primary objective
+            best_fitness_f5 = min(ind.y[4] for ind in self.pop)  # Assuming y[0] corresponds to the primary objective
             fitness_scores_f5.append(best_fitness_f5)
 
         fitness_scores = []
@@ -126,7 +126,7 @@ class NSGA2:
         fitness_scores.append(fitness_scores_f4)
         fitness_scores.append(fitness_scores_f5)
         
-        return fronts_individual,fitness_scores
+        return fitness_scores,fronts_individual
     
 def main():
     fitness_scores = list()

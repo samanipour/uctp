@@ -1,4 +1,4 @@
-from course import get_course
+from ..model.course import get_course
 def prerequisites_violation_penalty(plan,uni_program_list,max_sems):
     penalty = 0
     presented_course_plan=[[]] * max_sems
