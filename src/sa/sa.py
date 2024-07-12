@@ -37,3 +37,19 @@ class SimulatedAnnealing:
             fitness_scores.append(self.p_best.y)
             self.time_index+=1
         return self.p_best,fitness_scores
+
+def main():
+    pass
+    # nullary = Nullary(cnum,max_sem_num)
+    # unary = Unary(max_sem_num)
+    # objective = UTCObjective()
+    # gpm = GPM()
+    # max_termination_time = 20 #In seconds
+    # # termination = MaxFeCalls(11)
+    # temp_schedular = PolyTempSchedular(t_start=10,epsilon=0.05)
+    # SA  = SimulatedAnnealing(random,temp_schedular,gpm=gpm,nullary=nullary,unary=unary,termination=termination)
+    # best_found_solution,fitness_scores = SA.solve(objective)
+    # return fitness_scores
+
+if __name__ == "__main__":
+    main()
