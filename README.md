@@ -1,5 +1,27 @@
 # This project is under refactoring !!
+## for technical design and implementation details see the written document under docs director (currently avaliable only in Farsi)
 
+# How to run the project
+## install prerequisites as follows:
+- install python 3.8 or later
+- install numpy package
+- install matplotlib packages
+## input data
+input your data under src/inputs folders in inputs.json file, please don't mess with json file structure!
+
+## get the outputs
+after running each on of the algorithms, the outputs automatically saved under src/outputs folder
+
+## you should run the each algorithm module by calling it trough your shell
+```
+python -m src.genetic.ge
+or
+python -m src.nsga2.nsga2
+or
+python -m src.sa.sa
+```
+
+# Problem Description
 Optimization Course Project:
 
 The goal of this project is to use meta-heuristics algorithms and present optimization software for course scheduling at University. The detailed description of the problem is as follows:
