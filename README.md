@@ -1,5 +1,5 @@
 # This project is under refactoring !!
-## for technical design and implementation details see the written document under docs director (currently avaliable only in Farsi)
+## for technical design and implementation details see the written document under docs director (currently available only in Farsi)
 
 # How to run the project
 ## install prerequisites as follows:
