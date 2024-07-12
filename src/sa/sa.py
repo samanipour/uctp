@@ -35,7 +35,5 @@ class SimulatedAnnealing:
                 if (random.random() < math.exp(-delta_e/T)):
                     p_current = p_new
             fitness_scores.append(self.p_best.y)
-            # print(fitness_scores)
             self.time_index+=1
-        # plot_results(fitness_scores)
         return self.p_best,fitness_scores

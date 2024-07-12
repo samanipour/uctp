@@ -1,3 +1,5 @@
+# This project is under refactoring !!
+
 Optimization Course Project:
 
 The goal of this project is to use meta-heuristics algorithms and present optimization software for course scheduling at University. The detailed description of the problem is as follows:

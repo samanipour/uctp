@@ -1,4 +1,4 @@
-import constraint_domination2
+import src.nsga2.constraint_domination as constraint_domination
 def non_dominated_sorting(population):
     """
     Perform non-dominated sorting on the population.
@@ -19,9 +19,9 @@ def non_dominated_sorting(population):
         S[p] = []
         n[p] = 0
         for q in range(len(population)):
-            if constraint_domination2.dominates(population[p].y, population[q].y):
+            if constraint_domination.dominates(population[p].y, population[q].y):
                 S[p].append(q)
-            elif constraint_domination2.dominates(population[q].y, population[p].y):
+            elif constraint_domination.dominates(population[q].y, population[p].y):
                 n[p] += 1
         
         if n[p] == 0:

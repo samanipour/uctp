@@ -1,4 +1,4 @@
-from .objective2 import *
+from .objective import *
 class WeightedObjective:
     def compute(self,plan):
         ie = total_instructor_load_error(plan)

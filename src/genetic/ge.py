@@ -1,15 +1,15 @@
 from ..model.individual import Individual
 from ..helper import inputs
 import math
-from ..gpm.gpm2 import GPM
-from ..sa.sa_nullary2 import Nullary
-from .unary import MPX
-from .binary import UCX
+from ..gpm.gpm import GPM
+from ..operator.nullary import Nullary
+from ..operator.unary import MPX
+from ..operator.binary import UCX
 from .tournament import Tournament
-from ..termination.sa_maxtime import MaxTimeTermination
+from ..termination.maxtime import MaxTimeTermination
 import random
 from ..helper.plot_results import *
-from ..objective.single_objective import WeightedObjective
+from ..objective.weighted_objective import WeightedObjective
 class GE:
     def __init__(self,random,gpm,nullary,unary,binary,selection,termination,pop_size=4,cr=0.7):
         self.random = random
